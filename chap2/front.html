@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // axios.get('https://www.zerocho.com/api/get')
+    //   .then((result)=>{
+    //     console.log(result);
+    //     console.log(result.data);
+    //   })
+    //   .catch((error)=>{
+    //     console.error(error);
+    //   })
+    
+    // (async ()=>{
+    //   try {
+    //     const result = await axios.get('https://www.zerocho.com/api/get');
+    //     console.log(result);
+    //     console.log(result.data);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // })(); 
+    //익명함수로 즉시실행
+
+    // (async ()=>{
+    //   try {
+    //     const result = await axios.post('https://www.zerocho.com/api/post/json',{
+    //       name:'temp',
+    //       birth:1997,
+    //     });
+    //     console.log(result);
+    //     console.log(result.data);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // })(); 
+    // cors 에러 발생
+
+    (async ()=>{
+      try {
+        const result = await axios.get(`https://www.zerocho.com/api/search/${encodeURIComponent('노드')}`);
+        console.log(result);
+        console.log(result.data);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+    //cors 에러 발생
+  </script>
+  
+</body>
+</html>
