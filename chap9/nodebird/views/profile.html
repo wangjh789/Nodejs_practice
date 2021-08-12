@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <div class="timeline">
+    <div class='my-info'>
+      <form id="change-form" action="/user/change" method="POST">
+        <input id="change-nick" type="text" name="nick">
+        <button>닉네임 변경</button>
+      </form>
+      <div><button class="withdraw-btn">회원탈퇴</button> </div>
+    </div>
+    <div class="followings half">
+      <h2>팔로잉 목록</h2>
+      {% if user.Followings %}
+        {% for following in user.Followings %}
+          <div>
+            {{following.nick}}   
+            <input type="hidden" value="{{following.id}}" class="user-id">
+            <button>팔로잉 끊기</button> 
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div class="followers half">
+      <h2>팔로워 목록</h2>
+      {% if user.Followers %}
+        {% for follower in user.Followers %}
+          <div>{{follower.nick}}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script>
+    document.querySelector('.withdraw-btn').addEventListener('click',()=>{
+      axios.post('/user/withdraw')
+      .then(()=>{
+        location.replace('/')
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    })
+
+    const followings = document.querySelectorAll('.followings div');
+    followings.forEach((userItem)=>{
+      const cancelBtn = userItem.querySelector('button');
+      cancelBtn.addEventListener('click',()=>{
+        const userId = userItem.querySelector('.user-id').value;
+        if(confirm('정말 팔로우를 끊으시겠습니까?')){
+          axios.delete(`user/${userId}/follow`)
+        .then(() => {
+          location.reload();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+        }
+      })
+    })
+  </script>
+{% endblock%}
