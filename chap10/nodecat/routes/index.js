@@ -52,10 +52,16 @@ router.get('/search/:hashtag',async(req,res,next)=>{
   }
 })
 
-
-
-
-
+router.get('/myfollowing',async(req,res,next)=>{
+  try {
+    const result = await request(req,'/followings/my')
+    res.json(result.data);
+  } catch (error) {
+    console.error(error)
+    next(error)
+    
+  }
+})
 
 router.get('/test',async(req,res,next)=>{
   try {

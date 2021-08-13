@@ -1,6 +1,7 @@
 const jwt= require('jsonwebtoken')
 const RateLimit = require('express-rate-limit')
-
+const {User,Domain} = require('../models')
+const url = require('url')
 exports.isLoggedIn = (req,res,next)=>{
   if(req.isAuthenticated()){
     next()
@@ -35,6 +36,42 @@ exports.verifyToken = (req,res,next)=>{
     })
   }
 }
+
+// exports.apiLimiter = async (req,res,next) => {
+//   const user = await User.findOne({
+//     where:{id:req.decoded.id},
+//     include:{
+//       model:Domain,
+//       attributes:['type','host']
+//     }
+//   })
+//   const type = user.getDomains({
+//     where:{host:url.parse(req.get('origin')).host}
+//   }).type;
+//   if(type === 'free'){
+//     new RateLimit({
+//       windowMs:60*1000,
+//       max:1,
+//       handler(req,res){
+//         res.status(this.statusCode).json({
+//         code:this.statusCode, //기본값 429
+//         message:'1분에 한번만 요청할수 있습니다.'
+//       })
+//     }
+//     })(req,res,next)
+//   }else{
+//     new RateLimit({
+//       windowMs:60*1000,
+//       max:1,
+//       handler(req,res){
+//         res.status(this.statusCode).json({
+//         code:this.statusCode, //기본값 429
+//         message:'프리리엄 1분에 한번만 요청할수 있습니다.'
+//       })
+//     }
+//     })(req,res,next)
+//   }
+// }
 
 exports.apiLimiter = new RateLimit({
   windowMs: 60*1000,

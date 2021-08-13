@@ -104,4 +104,27 @@ router.get('/posts/hashtag/:title',verifyToken,apiLimiter,async(req,res)=>{
   }
 })
 
+router.get('/followings/my',verifyToken,apiLimiter,async(req,res)=>{
+  try {
+    const user = await User.findOne({id:req.decoded.id});
+    if(!user){
+      return res.status(404).json({
+        code:404,
+        message:'유저를 찾지 못했습니다.'
+      })
+    }
+    const followings = await user.getFollowings();
+    return res.status(200).json({
+      code:200,
+      payload:followings
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      code:500,
+      message:'서버에러'
+    })
+  }
+})
+
 module.exports = router;
