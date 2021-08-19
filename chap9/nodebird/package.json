@@ -4,7 +4,8 @@
   "description": "make sns service",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "nodemon server",
+    "test": "jest"
   },
   "author": "woowang",
   "license": "ISC",
@@ -25,6 +26,8 @@
     "sequelize-cli": "6.2.0"
   },
   "devDependencies": {
-    "nodemon": "2.0.12"
+    "jest": "27.0.6",
+    "nodemon": "2.0.12",
+    "supertest": "6.1.5"
   }
 }
